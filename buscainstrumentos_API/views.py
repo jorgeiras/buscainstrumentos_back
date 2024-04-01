@@ -1,6 +1,6 @@
 
 from rest_framework.response import Response
-from rest_framework import status
+from rest_framework import status, pagination
 from rest_framework.views import APIView
 from django.db.models import Q
 
@@ -34,9 +34,16 @@ class InstrumentosAll(APIView):
 
     def get(self, request):
         instruments = Instrument.objects.all()
+        paginator = pagination.PageNumberPagination()  # Instantiate the paginator
+        page = paginator.paginate_queryset(instruments, request)  # Paginate the queryset
+
+        if page is not None:
+            serializer = InstrumentSerializer(page, many=True)
+            return paginator.get_paginated_response(serializer.data)  # Use the paginated response
+
+        # Fallback for non-paginated response (optional)
         serializer = InstrumentSerializer(instruments, many=True)
         return Response(serializer.data, status=status.HTTP_200_OK)
-    
 
         
     
