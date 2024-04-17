@@ -1,0 +1,29 @@
+version: '3.8'
+
+services:
+  web:
+    build: .
+    environment:
+      - DJANGO_SECRET_KEY=${DJANGO_SECRET_KEY}
+      - DB_NAME=${DB_NAME}
+      - DB_USER=${DB_USER}
+      - DB_PASS=${DB_PASS}
+      - DB_HOST=${DB_HOST}
+      - DB_PORT=${DB_PORT}
+    command: gunicorn --workers=3 --timeout=120 --bind 0.0.0.0:8000 buscainstrumentos_back.wsgi:application
+    volumes:
+      - .:/app
+      - static_volume:/app/static
+
+  nginx:
+    image: nginx:alpine
+    ports:
+      - "80:80"
+    volumes:
+      - ./config/nginx:/etc/nginx/conf.d
+      - static_volume:/home/djangouser/buscainstrumentos_back
+    depends_on:
+      - web
+
+volumes:
+  static_volume:

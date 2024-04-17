@@ -33,7 +33,7 @@ class InstrumentosDetails(APIView):
 class InstrumentosAll(APIView):
 
     def get(self, request):
-        instruments = Instrument.objects.all()
+        instruments = Instrument.objects.all().order_by('id')
         paginator = pagination.PageNumberPagination()  # Instantiate the paginator
         page = paginator.paginate_queryset(instruments, request)  # Paginate the queryset
 
