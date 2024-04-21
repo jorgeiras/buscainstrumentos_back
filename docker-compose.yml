@@ -2,7 +2,7 @@ version: '3.8'
 
 services:
   web:
-    build: .
+    image: jorgeiras/buscainstrumentos_back:latest  
     environment:
       - DJANGO_SECRET_KEY=${DJANGO_SECRET_KEY}
       - DB_NAME=${DB_NAME}
@@ -13,7 +13,6 @@ services:
       - DROPLET_IP=${DROPLET_IP}
     command: gunicorn --workers=3 --timeout=120 --bind 0.0.0.0:8000 buscainstrumentos_back.wsgi:application
     volumes:
-      - .:/app
       - static_volume:/app/static
 
   nginx:
