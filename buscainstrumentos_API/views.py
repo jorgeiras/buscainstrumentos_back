@@ -46,6 +46,8 @@ class InstrumentosAll(APIView):
         return Response(serializer.data, status=status.HTTP_200_OK)
 
         
-    
+class Test(APIView):
+    def get(self, request):
+        return Response("hola mundo", status=status.HTTP_200_OK)
         
         
