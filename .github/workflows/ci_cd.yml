@@ -41,6 +41,7 @@ jobs:
           if [ ! -d "/home/djangouser/buscainstrumentos_back" ]; then
             # Clone the repo if it does not exist
             git clone https://github.com/jorgeiras/buscainstrumentos_back.git /home/djangouser/buscainstrumentos_back
+            cd /home/djangouser/buscainstrumentos_back
           else
             # Pull the latest changes in the repo
             cd /home/djangouser/buscainstrumentos_back
@@ -54,5 +55,5 @@ jobs:
           echo "DB_HOST=${{ secrets.DB_HOST }}" >> .env
           echo "DB_PORT=${{ secrets.DB_PORT }}" >> .env
           # Run docker-compose
-          docker-compose up -d
+          docker compose up --build -d
 
