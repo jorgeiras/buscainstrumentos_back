@@ -55,6 +55,8 @@ jobs:
           echo "DB_HOST=${{ secrets.DB_HOST }}" >> .env
           echo "DB_PORT=${{ secrets.DB_PORT }}" >> .env
           echo "DROPLET_IP=${{ secrets.DROPLET_IP }}" >> .env
+          # Pull the latest Docker image from docker hub
+          docker-compose pull
           # Run docker-compose
           docker compose up --build -d
 
