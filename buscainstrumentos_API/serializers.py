@@ -5,4 +5,4 @@ from buscainstrumentos_API.models import Instrument
 class InstrumentSerializer(serializers.ModelSerializer):
     class Meta:
         model = Instrument
-        fields = ('id','name', 'price', 'link','website')
+        fields = ('id','name', 'price', 'link', 'image', 'location', 'category', 'expiration', 'publish','website')
