@@ -48,6 +48,6 @@ class InstrumentosAll(APIView):
         
 class Test(APIView):
     def get(self, request):
-        return Response("hola mundo", status=status.HTTP_200_OK)
+        return Response("hola mundooo", status=status.HTTP_200_OK)
         
         
