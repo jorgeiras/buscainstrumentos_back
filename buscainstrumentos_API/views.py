@@ -1,9 +1,9 @@
 
 from rest_framework.response import Response
-from rest_framework import status, pagination
+from rest_framework import status
 from rest_framework.views import APIView
 from django.db.models import Q
-
+from mypagination import CustomPageNumberPagination
 
 from buscainstrumentos_API.models import Instrument
 from buscainstrumentos_API.serializers import InstrumentSerializer
@@ -34,7 +34,7 @@ class InstrumentosAll(APIView):
 
     def get(self, request):
         instruments = Instrument.objects.all().order_by('id')
-        paginator = pagination.PageNumberPagination()  # Instantiate the paginator
+        paginator = CustomPageNumberPagination()  # Instantiate the paginator
         page = paginator.paginate_queryset(instruments, request)  # Paginate the queryset
 
         if page is not None:
