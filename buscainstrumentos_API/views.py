@@ -3,7 +3,7 @@ from rest_framework.response import Response
 from rest_framework import status
 from rest_framework.views import APIView
 from django.db.models import Q
-from mypagination import CustomPageNumberPagination
+from .mypagination import CustomPageNumberPagination
 
 from buscainstrumentos_API.models import Instrument
 from buscainstrumentos_API.serializers import InstrumentSerializer
