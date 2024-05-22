@@ -24,7 +24,16 @@ class InstrumentosDetails(APIView):
 
     def get(self, request):
         nameInst = request.GET.get('name')
-        instruments = Instrument.objects.filter(Q(name__exact=nameInst) | Q(name__contains=nameInst))
+        instruments = Instrument.objects.filter(Q(name__exact=nameInst) | Q(name__contains=nameInst)).order_by('id')
+
+        paginator = CustomPageNumberPagination()  # Instantiate the paginator
+        page = paginator.paginate_queryset(instruments, request)  # Paginate the queryset
+
+        if page is not None:
+            serializer = InstrumentSerializer(page, many=True)
+            return paginator.get_paginated_response(serializer.data)  # Use the paginated response
+
+        # Fallback for non-paginated response (optional)
         serializer = InstrumentSerializer(instruments, many=True)
         return Response(serializer.data, status=status.HTTP_200_OK)
 
