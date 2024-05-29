@@ -24,7 +24,22 @@ class InstrumentosDetails(APIView):
 
     def get(self, request):
         nameInst = request.GET.get('name')
-        instruments = Instrument.objects.filter(Q(name__exact=nameInst) | Q(name__contains=nameInst)).order_by('id')
+        category = request.GET.get('category')
+        min_price = request.GET.get('minPrice')
+        max_price = request.GET.get('maxPrice')
+
+        filters = Q(name__icontains=nameInst)
+
+        if category:
+            filters &= Q(category__iexact=category)
+
+        if min_price:
+            filters &= Q(price__gte=min_price)
+
+        if max_price and max_price != 'Infinity':
+            filters &= Q(price__lte=max_price)
+
+        instruments = Instrument.objects.filter(filters).order_by('id')
 
         paginator = CustomPageNumberPagination()  # Instantiate the paginator
         page = paginator.paginate_queryset(instruments, request)  # Paginate the queryset
@@ -42,7 +57,20 @@ class InstrumentosDetails(APIView):
 class InstrumentosAll(APIView):
 
     def get(self, request):
-        instruments = Instrument.objects.all().order_by('id')
+        category = request.GET.get('category')
+        min_price = request.GET.get('minPrice')
+        max_price = request.GET.get('maxPrice')
+
+        if category:
+            filters &= Q(category__iexact=category)
+
+        if min_price:
+            filters &= Q(price__gte=min_price)
+
+        if max_price and max_price != 'Infinity':
+            filters &= Q(price__lte=max_price)
+
+        instruments = Instrument.objects.filter(filters).order_by('id')
         paginator = CustomPageNumberPagination()  # Instantiate the paginator
         page = paginator.paginate_queryset(instruments, request)  # Paginate the queryset
 
