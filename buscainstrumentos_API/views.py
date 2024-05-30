@@ -28,7 +28,10 @@ class InstrumentosDetails(APIView):
         min_price = request.GET.get('minPrice')
         max_price = request.GET.get('maxPrice')
 
-        filters = Q(name__icontains=nameInst)
+        filters = Q()
+
+        if nameInst:
+            filters &= Q(name__icontains=nameInst)
 
         if category:
             filters &= Q(category__iexact=category)
@@ -60,6 +63,8 @@ class InstrumentosAll(APIView):
         category = request.GET.get('category')
         min_price = request.GET.get('minPrice')
         max_price = request.GET.get('maxPrice')
+
+        filters = Q()
 
         if category:
             filters &= Q(category__iexact=category)
