@@ -26,7 +26,11 @@ SECRET_KEY = os.environ.get('DJANGO_SECRET_KEY')
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = [os.getenv('DROPLET_IP'),'127.0.0.1', 'localhost']
+ALLOWED_HOSTS = [os.getenv('DROPLET_IP'),'127.0.0.1', 'localhost', "https://jorgeiras.github.io/buscainstrumentos_front", 'buscainstrumentosback.duckdns.org']
+
+CORS_ALLOWED_ORIGINS = [
+    "https://jorgeiras.github.io/buscainstrumentos_front",
+]
 
 
 # Application definition
