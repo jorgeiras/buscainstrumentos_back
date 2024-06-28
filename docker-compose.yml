@@ -29,13 +29,6 @@ services:
     depends_on:
       - web
 
-  certbot:
-    image: certbot/certbot
-    volumes:
-      - certbot_certs:/etc/letsencrypt
-      - certbot_challenges:/var/lib/letsencrypt
-    entrypoint: "/bin/sh -c 'trap exit TERM; while :; do certbot renew --webroot -w /var/lib/letsencrypt/; sleep 12h & wait $${!}; done;'"
-
 
 
 volumes:
