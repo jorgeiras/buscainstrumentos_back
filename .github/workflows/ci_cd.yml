@@ -56,12 +56,17 @@ jobs:
           echo "DB_PORT=${{ secrets.DB_PORT }}" >> .env
           echo "DROPLET_IP=${{ secrets.DROPLET_IP }}" >> .env
           
-          # Cleanup unused Docker images and containers
-          docker system prune -af
-          
           # Pull the latest Docker image from docker hub
           docker compose pull
           
           # Run docker-compose
           docker compose up --build -d
 
+          # Check if certificate already exists
+          if [ ! -d "/etc/letsencrypt/live/buscainstrumentosback.duckdns.org" ]; then
+            # Obtain the SSL certificate
+            docker-compose run --rm certbot certonly --webroot --webroot-path=/var/lib/letsencrypt -d buscainstrumentosback.duckdns.org
+          fi
+
+          # Cleanup unused Docker images and containers
+          docker system prune -f
