@@ -63,7 +63,7 @@ jobs:
           # Check if certificate already exists
           if [ ! -d "/etc/letsencrypt/live/buscainstrumentosback.duckdns.org" ]; then
             # Obtain the SSL certificate
-            docker compose run --rm certbot certonly --webroot --webroot-path=/var/lib/letsencrypt -d buscainstrumentosback.duckdns.org
+            docker compose run --rm certbot certonly --non-interactive --agree-tos --email alonsourrutia.jor@gmail.com --webroot --webroot-path=/var/lib/letsencrypt -d buscainstrumentosback.duckdns.org
             docker compose exec nginx nginx -s reload
           fi
 
