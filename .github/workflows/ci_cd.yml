@@ -64,6 +64,7 @@ jobs:
           if [ ! -d "/etc/letsencrypt/live/buscainstrumentosback.duckdns.org" ]; then
             # Obtain the SSL certificate
             docker compose run --rm certbot certonly --webroot --webroot-path=/var/lib/letsencrypt -d buscainstrumentosback.duckdns.org
+            docker compose exec nginx nginx -s reload
           fi
 
           # Cleanup unused Docker images and containers
