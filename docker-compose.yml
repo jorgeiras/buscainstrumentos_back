@@ -34,7 +34,10 @@ services:
     volumes:
       - certbot_certs:/etc/letsencrypt
       - certbot_challenges:/var/lib/letsencrypt
-    entrypoint: "/bin/sh -c 'trap exit TERM; while :; do certbot renew --webroot -w /var/lib/letsencrypt/; sleep 12h & wait $${!}; done;'"
+    #entrypoint: "/bin/sh -c 'trap exit TERM; while :; do certbot renew --webroot -w /var/lib/letsencrypt/; sleep 12h & wait $${!}; done;'"
+    entrypoint: "/bin/sh -c 'trap exit TERM; while :; do certbot renew --non-interactive --webroot -w /var/lib/letsencrypt/ --deploy-hook \"nginx -s reload\"; sleep 12h & wait $${!}; done;'"
+
+
 
 volumes:
   static_volume:
