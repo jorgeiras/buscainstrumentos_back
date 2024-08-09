@@ -35,9 +35,9 @@ The backend serves as the component that provides the the items to the front end
       - `minPrice` (string, optional): The minPrice of the instruments to filter by.
       - `maxPrice` (string, optional): The maxPrice of the instruments to filter by.
 
-- **Database Integration**: Connects to a PostgreSQL database where the instruments and user data are stored.
-  - **Models**: Defines the structure of the data with Django models. For this case the Model created is Instrument, which represents the table Instrument of the database that constains all the data from the scraped instruments.
-    **Model Fields**:
+- **Database Integration**: Connects to a PostgreSQL database where the instruments data are stored.
+  - **Models**: Defines the structure of the data with Django models. For this case the Model created is Instrument, which represents the table Instrument of the database that constains all the data from the scraped instruments.  
+    **Instrument Fields**:
     - `id` (`AutoField`, primary key): This is an automatically incremented primary key for the model.
     - `name` (`CharField`): This field stores the name of the instrument. It can have a maximum length of 500 characters.
     - `price` (`DecimalField`): This field stores the price of the instrument. It can handle values up to 10 digits long, including 2 decimal places. This field is optional and defaults to `None`.
