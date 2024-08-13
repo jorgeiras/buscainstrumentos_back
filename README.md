@@ -1,6 +1,8 @@
 # Buscainstrumentos Backend
 
-![Backend Logo](https://github.com/jorgeiras/buscainstrumentos_back/blob/master/images/buscainstrumentoslogo.png)
+<div align="center">
+  <img src="https://github.com/jorgeiras/buscainstrumentos_back/blob/master/images/buscainstrumentoslogo.png" alt="Backend Logo">
+</div>
 
 ### Description
 This is the backend service of the project Buscainstrumentos, implemented using Django REST Framework and hosted in digital ocean using droplet service (IaaS).
@@ -53,7 +55,9 @@ The backend serves as the component that provides the the items to the front end
 
 ### Infrastructure and Hosting
 ...
-![Backend hosting](https://github.com/jorgeiras/buscainstrumentos_back/blob/master/images/backend_db.png)
+<div align="center">
+  <img src="https://github.com/jorgeiras/buscainstrumentos_back/blob/master/images/backend_db.png" alt="Backend hosting">
+</div>
 
 ### Usage
 ...
@@ -63,7 +67,9 @@ The backend serves as the component that provides the the items to the front end
 
 ### CI/CD
 ...
-![Backend hosting](https://github.com/jorgeiras/buscainstrumentos_back/blob/master/images/backend_cicd.png)
+<div align="center">
+  <img src="https://github.com/jorgeiras/buscainstrumentos_back/blob/master/images/backend_cicd.png" alt="Backend CICD">
+</div>
 
 ### Docker
 ...
