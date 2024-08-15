@@ -54,10 +54,37 @@ The backend serves as the component that provides the the items to the front end
 
 
 ### Infrastructure and Hosting
-...
+
 <div align="center">
   <img src="https://github.com/jorgeiras/buscainstrumentos_back/blob/master/images/backend_db.png" alt="Backend hosting">
 </div>
+  
+This diagram above represents the deployment architecture for the backend using Django REST Framework, Nginx, certbot,  Docker, and a PostgreSQL database, hosted on DigitalOcean droplets (virtual private servers).  
+This setup is common for scalable, secure, and modular web applications. By separating the components into Docker containers and using droplets, it allows for easy scaling, maintenance, and security management. Each component has a specific role, contributing to a robust backend architecture.  
+Here's a breakdown of the components and their interactions:
+
+#### 1. Backend Droplet:
+
+- **Docker Containers**:
+  - **Django REST Framework**: This component is responsible for handling the backend logic of the application, particularly the API requests. It's encapsulated within a Docker container, which allows it to run in an isolated environment.
+  - **Nginx**: Nginx serves as a reverse proxy server in this setup. It receives incoming requests from the frontend and forwards them to the Django REST Framework container. It is also configured to use the SSL certificate created by certbot.
+  - **Certbot**: Certbot is used for managing SSL/TLS certificates, ensuring that the communication between the client and server is encrypted. This container automatically obtains and renews certificates, integrating them with Nginx.
+
+#### 2. Database Droplet:
+
+- **PostgreSQL Database**: This droplet hosts a PostgreSQL database. The Django REST Framework communicates with this database to store and retrieve data. Requests are sent from the backend droplet to this database droplet, and responses are sent back accordingly.
+
+#### 3. Interaction Flow:
+
+- **Frontend Request**: The frontend sends a request to the backend droplet. This request is received by Nginx.
+- **Backend Processing**: Nginx forwards the request to the Django REST Framework container, which processes it. If the request involves data retrieval or storage, the Django application will query the PostgreSQL database.
+- **Database Interaction**: The Django application sends a request to the PostgreSQL database hosted on a separate droplet, and the database processes this request and sends a response back.
+- **Response to Frontend**: Once the Django application has the necessary data (or has completed the required processing), it sends the response back to Nginx, which then forwards it to the frontend.
+
+#### 4. Security:
+
+- **Certbot**: The Certbot container ensures that SSL certificates are properly configured and maintained, providing secure HTTPS communication between the client and the backend server.
+
 
 ### Usage
 ...
