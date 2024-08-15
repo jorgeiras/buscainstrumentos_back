@@ -53,8 +53,8 @@ The backend serves as the component that provides the the items to the front end
 
 
 
-### Infrastructure and Hosting
-
+### Infrastructure and Hosting  
+  
 <div align="center">
   <img src="https://github.com/jorgeiras/buscainstrumentos_back/blob/master/images/backend_db.png" alt="Backend hosting">
 </div>
@@ -93,10 +93,49 @@ Here's a breakdown of the components and their interactions:
 ...
 
 ### CI/CD
-...
+  
 <div align="center">
   <img src="https://github.com/jorgeiras/buscainstrumentos_back/blob/master/images/backend_cicd.png" alt="Backend CICD">
 </div>
+    
+This diagram illustrates the CI/CD (Continuous Integration/Continuous Deployment) pipeline for deploying the project using Docker and Docker Compose on the backend droplet (a virtual server instance), hosted on DigitalOcean.  
+The pipeline is divided into two main jobs, as indicated by the color coding (green for the 1st job and orange for the 2nd job). This pipeline ensures that every time new code is pushed into the repository, the application is automatically rebuilt, the latest images are pulled, and the application is redeployed on the backend server, all while maintaining a clean environment by removing outdated images.  
+Here's a step-by-step explanation:
+
+##### 1st Job (Green): Building and Pushing Docker Image
+
+- **Developer Pushes Code to GitHub Repository**:
+  - The process begins when a developer pushes new code to a GitHub repository.
+
+- **Workflow Gets Triggered**:
+  - The push event triggers a CI/CD GitHub Actions workflow.
+
+- **Build Docker Image**:
+  - The workflow builds a Docker image of the project based on the Dockerfile in the repository. This image encapsulates the application, its dependencies, and the environment configuration.
+
+- **Push Image to Docker Hub**:
+  - Once the Docker image is built, it is pushed to Docker Hub where Docker images are stored. This makes the image available for deployment on the server that can pull from Docker Hub.
+
+##### 2nd Job (Orange): Deploying the Application
+
+- **Connect to the Droplet via SSH**:
+  - The second job in the pipeline involves connecting to the backend droplet via SSH. This is where the deployment takes place.
+
+- **Clone the Repository**:
+  - The deployment script written in the workflow clones the GitHub repository into the droplet. This step ensures that the latest version of the application code is available on the server (for files that would be needed for deployment like dockerCompose file).
+
+- **Copy Necessary Variables into .env**:
+  - The script copies environment variables into a `.env` file within the droplet. This file contains sensitive information like database credentials and other configuration settings needed by the application.
+
+- **Docker Compose Pull**:
+  - The script runs `docker compose pull` to pull the latest versions of the Docker images from Docker Hub. This ensures that the most recent image (built in the 1st job) and other service images are available on the droplet.
+
+- **Docker Compose Up**:
+  - The next step is to run `docker compose up`, which creates and starts the containers for the application and its associated services (Django REST Framework, Nginx, Certbot). This command uses the Docker images pulled in the previous step.
+
+- **Remove Old Images**:
+  - After the new containers are up and running, the script removes any old Docker images that are no longer needed. This helps free up disk space on the droplet and prevents the storage from being filled up by unnecessary files.
+
 
 ### Docker
 ...
