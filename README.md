@@ -54,11 +54,13 @@ The backend serves as the component that provides the the items to the front end
 
 
 ### Infrastructure and Hosting  
-  
+
+    
 <div align="center">
   <img src="https://github.com/jorgeiras/buscainstrumentos_back/blob/master/images/backend_db.png" alt="Backend hosting">
 </div>
-  
+
+    
 This diagram above represents the deployment architecture for the backend using Django REST Framework, Nginx, certbot,  Docker, and a PostgreSQL database, hosted on DigitalOcean droplets (virtual private servers).  
 This setup is common for scalable, secure, and modular web applications. By separating the components into Docker containers and using droplets, it allows for easy scaling, maintenance, and security management. Each component has a specific role, contributing to a robust backend architecture.  
 Here's a breakdown of the components and their interactions:
@@ -93,11 +95,13 @@ Here's a breakdown of the components and their interactions:
 ...
 
 ### CI/CD
-  
+
+    
 <div align="center">
   <img src="https://github.com/jorgeiras/buscainstrumentos_back/blob/master/images/backend_cicd.png" alt="Backend CICD">
 </div>
-    
+
+      
 This diagram illustrates the CI/CD (Continuous Integration/Continuous Deployment) pipeline for deploying the project using Docker and Docker Compose on the backend droplet (a virtual server instance), hosted on DigitalOcean.  
 The pipeline is divided into two main jobs, as indicated by the color coding (green for the 1st job and orange for the 2nd job). This pipeline ensures that every time new code is pushed into the repository, the application is automatically rebuilt, the latest images are pulled, and the application is redeployed on the backend server, all while maintaining a clean environment by removing outdated images.  
 Here's a step-by-step explanation:
@@ -138,7 +142,75 @@ Here's a step-by-step explanation:
 
 
 ### Docker
-...
+The Docker setup for this project is designed to encapsulate the application, its dependencies, and the environment configurations within Docker containers. This ensures consistency across different environments (development, testing, and production) and simplifies the deployment process.  
+It also makes it easy to change the hosting cloud provider if necessary.
+
+#### Dockerfile
+
+The `Dockerfile` defines the environment in which the Django application runs. Below is a breakdown of its contents:
+
+- **Base Image**:
+  - `FROM python:3.11`: Uses the official Python 3.11 image as the base image.
+
+- **Environment Variables**:
+  - `ENV PYTHONDONTWRITEBYTECODE 1`: Prevents Python from writing `.pyc` files to disk.
+  - `ENV PYTHONUNBUFFERED 1`: Ensures that Python output is not buffered, which is helpful for logging.
+
+- **Working Directory**:
+  - `WORKDIR /app`: Sets the working directory inside the container to `/app`.
+
+- **Installing Dependencies**:
+  - `COPY requirements.txt /app/`: Copies the `requirements.txt` file to the container.
+  - `RUN pip install --upgrade pip && pip install -r requirements.txt`: Installs the dependencies listed in `requirements.txt`.
+
+- **Copying Application Code**:
+  - `COPY . /app/`: Copies the current directory contents into the container at `/app/`.
+
+- **Collect Static Files**:
+  - `RUN python manage.py collectstatic --noinput`: Collects static files into the `static` directory for production use.
+
+- **Expose Port**:
+  - `EXPOSE 8000`: Makes port 8000 available to the outside world.
+
+- **Command to Run the Application**:
+  - `CMD ["gunicorn", "--workers=3", "--timeout=120", "--bind", "0.0.0.0:8000", "buscainstrumentos_back.wsgi:application"]`: Starts the application using Gunicorn with 3 worker processes and a 120-second timeout.
+
+#### Docker Compose
+
+The `docker-compose.yml` file orchestrates the multi-container Docker application. It defines three services: `web`, `nginx`, and `certbot`.
+
+##### Services
+
+1. **Web Service**:
+   - **Image**: Uses the Docker image built from the `Dockerfile`.
+   - **Environment Variables**: The application’s sensitive configurations, like database credentials are passed via environment variable.
+   - **Command**: Runs Gunicorn to serve the Django application.
+   - **Volumes**: l
+     - `static_volume:/app/static`: Mounts the volume for static files.
+
+2. **Nginx Service**:
+   - **Image**: Uses the official Nginx Alpine image for lightweight, secure web serving.
+   - **Ports**: 
+     - `80:80`: Maps HTTP traffic to port 80.
+     - `443:443`: Maps HTTPS traffic to port 443.
+   - **Volumes**: 
+     - `./config/nginx:/etc/nginx/conf.d/:ro`: Mounts the Nginx configuration files.
+     - `static_volume:/home/djangouser/buscainstrumentos_back`: Mounts the static files directory.
+     - `/home/djangouser/certbot/www/:/var/www/certbot/:ro`: Mounts the directory for Certbot web root challenges.
+     - `/home/djangouser/certbot/conf/:/etc/nginx/ssl/:ro`: Mounts the directory for SSL certificates.
+   - **Depends On**: 
+     - `web`: Ensures that the Nginx service starts only after the web service is up.
+
+3. **Certbot Service**:
+   - **Image**: Uses the official Certbot image for SSL/TLS certificate management.
+   - **Volumes**: 
+     - `/home/djangouser/certbot/www/:/var/www/certbot/:rw`: Mounts the directory for Certbot web root challenges.
+     - `/home/djangouser/certbot/conf/:/etc/letsencrypt/:rw`: Mounts the directory for storing and renewing SSL certificates.
+
+##### Volumes
+
+- **static_volume**: Used for storing the application's static files.
+
 
 ### License
 ...
