@@ -118,13 +118,15 @@ Here's a breakdown of the components and their interactions:
 
 
 
-### CI/CD
 
     
+### CI/CD
+
+<br><br>
 <div align="center">
   <img src="https://github.com/jorgeiras/buscainstrumentos_back/blob/master/images/backend_cicd.png" alt="Backend CICD" style="margin-top: 20px; margin-bottom: 20px;">
 </div>
-
+<br><br>
       
 This diagram illustrates the CI/CD (Continuous Integration/Continuous Deployment) pipeline for deploying the project using Docker and Docker Compose on the backend droplet (a virtual server instance), hosted on DigitalOcean.  
 The pipeline is divided into two main jobs, as indicated by the color coding (green for the 1st job and orange for the 2nd job). This pipeline ensures that every time new code is pushed into the repository, the application is automatically rebuilt, the latest images are pulled, and the application is redeployed on the backend server, all while maintaining a clean environment by removing outdated images.  
