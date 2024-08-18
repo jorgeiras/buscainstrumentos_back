@@ -9,14 +9,43 @@ This is the backend service of the project Buscainstrumentos, implemented using 
 The project uses CI/CD for updating the backend service automatically after any change in the repo via github actions, Docker and Docker Compose.   
 
 ### Table of Contents
-1. [Features](#features)
-2. [Infrastructure and Hosting](#infrastructure-and-hosting)
-3. [Usage](#usage)
-4. [Development](#development)
-5. [CI/CD](#cicd)
-6. [Docker](#docker)
-7. [License](#license)
-8. [Contact](#contact)
+1. [Technical Stack](#technical-stack)
+2. [Features](#features)
+3. [Infrastructure and Hosting](#infrastructure-and-hosting)
+4. [CI/CD](#cicd)
+5. [Docker](#docker)
+6. [Contact](#contact)
+
+
+### Technical Stack
+
+This project uses a variety of technologies and tools to build, deploy, and manage the backend service. Below is an overview of the key components of the technical stack:
+
+- **Backend Framework**: 
+  - **Django REST Framework**: Used to build the backend API, providing a powerful and flexible toolkit for creating RESTful web services in Python.
+
+- **Programming Language**:
+  - **Python**: The primary language used for the backend development, chosen for its simplicity, readability, and extensive ecosystem.
+
+- **Database**:
+  - **PostgreSQL**: A powerful, open-source relational database used to store and manage the backend data, particularly the musical instruments' information.
+
+- **Web Server**:
+  - **Nginx**: Serves as a reverse proxy, handling incoming HTTP and HTTPS requests, forwarding them to the Django application, and managing SSL/TLS certificates for secure communication.
+
+- **Containerization**:
+  - **Docker**: Used to containerize the backend application, ensuring that it runs consistently across different environments.
+  - **Docker Compose**: Manages multi-container Docker applications, coordinating the different services (Django, Nginx, Certbot) required by the backend.
+
+- **Continuous Integration/Continuous Deployment (CI/CD)**:
+  - **GitHub Actions**: Automates the CI/CD pipeline, ensuring that every change to the codebase is tested, built, and deployed efficiently.
+
+- **Cloud Platform**:
+  - **DigitalOcean**: The backend service is hosted on DigitalOcean droplets (virtual private servers), providing a scalable and cost-effective cloud infrastructure.
+
+- **SSL/TLS Management**:
+  - **Certbot**: Automatically manages SSL/TLS certificates, ensuring that all communications with the backend are encrypted and secure.
+
 
 ### Features
 The backend serves as the component that provides the the items to the front end, contributing the following functionalities:
@@ -57,7 +86,7 @@ The backend serves as the component that provides the the items to the front end
 
     
 <div align="center">
-  <img src="https://github.com/jorgeiras/buscainstrumentos_back/blob/master/images/backend_db.png" alt="Backend hosting">
+  <img src="https://github.com/jorgeiras/buscainstrumentos_back/blob/master/images/backend_db.png" alt="Backend hosting" style="margin-top: 20px; margin-bottom: 20px;">
 </div>
 
     
@@ -88,17 +117,12 @@ Here's a breakdown of the components and their interactions:
 - **Certbot**: The Certbot container ensures that SSL certificates are properly configured and maintained, providing secure HTTPS communication between the client and the backend server.
 
 
-### Usage
-...
-
-### Development
-...
 
 ### CI/CD
 
     
 <div align="center">
-  <img src="https://github.com/jorgeiras/buscainstrumentos_back/blob/master/images/backend_cicd.png" alt="Backend CICD">
+  <img src="https://github.com/jorgeiras/buscainstrumentos_back/blob/master/images/backend_cicd.png" alt="Backend CICD" style="margin-top: 20px; margin-bottom: 20px;">
 </div>
 
       
@@ -211,9 +235,6 @@ The `docker-compose.yml` file orchestrates the multi-container Docker applicatio
 
 - **static_volume**: Used for storing the application's static files.
 
-
-### License
-...
 
 ### Contact
 ...
