@@ -84,11 +84,11 @@ The backend serves as the component that provides the the items to the front end
 
 ### Infrastructure and Hosting  
 
-    
+<br><br>  
 <div align="center">
   <img src="https://github.com/jorgeiras/buscainstrumentos_back/blob/master/images/backend_db.png" alt="Backend hosting" style="margin-top: 20px; margin-bottom: 20px;">
 </div>
-
+<br><br>  
     
 This diagram above represents the deployment architecture for the backend using Django REST Framework, Nginx, certbot,  Docker, and a PostgreSQL database, hosted on DigitalOcean droplets (virtual private servers).  
 This setup is common for scalable, secure, and modular web applications. By separating the components into Docker containers and using droplets, it allows for easy scaling, maintenance, and security management. Each component has a specific role, contributing to a robust backend architecture.  
