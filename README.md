@@ -239,5 +239,7 @@ The `docker-compose.yml` file orchestrates the multi-container Docker applicatio
 
 
 ### Contact
-...
+For more information or inquiries, you can reach me on LinkedIn or via email:
+- **LinkedIn**: (www.linkedin.com/in/jorge-alonso-urrutia-544022261)
+- **Email**: [alonsourrutia.jor@gmail.com](mailto:alonsourrutia.jor@gmail.com)
 
