@@ -33,7 +33,7 @@ services:
     volumes:
       - /home/djangouser/certbot/www/:/var/www/certbot/:rw
       - /home/djangouser/certbot/conf/:/etc/letsencrypt/:rw
-
+    command: ["certbot", "renew", "--webroot", "-w", "/var/www/certbot", "--quiet", "--no-self-upgrade"]
 
     
 volumes:
